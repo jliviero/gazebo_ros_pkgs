@@ -23,6 +23,7 @@
 #include <gazebo/common/Events.hh>
 #include <gazebo/gazebo_config.h>
 #include <gazebo_ros/gazebo_ros_api_plugin.h>
+#include <std_msgs/builtin_float.h>
 
 namespace gazebo
 {
@@ -183,6 +184,7 @@ void GazeboRosApiPlugin::loadGazeboRosApiPlugin(std::string world_name)
   gazebonode_->Init(world_name);
   //stat_sub_ = gazebonode_->Subscribe("~/world_stats", &GazeboRosApiPlugin::publishSimTime, this); // TODO: does not work in server plugin?
   factory_pub_ = gazebonode_->Advertise<gazebo::msgs::Factory>("~/factory");
+  rtf_sub_ = gazebonode_->Subscribe("~/world_stats", &GazeboRosApiPlugin::publishRealTimeFactor, this);
   request_pub_ = gazebonode_->Advertise<gazebo::msgs::Request>("~/request");
   response_sub_ = gazebonode_->Subscribe("~/response",&GazeboRosApiPlugin::onResponse, this);
 
@@ -217,6 +219,9 @@ void GazeboRosApiPlugin::advertiseServices()
 {
   // publish clock for simulated ros time
   pub_clock_ = nh_->advertise<rosgraph_msgs::Clock>("/clock",10);
+
+  // publish real-time factor
+  pub_real_time_factor_ = nh_->advertise<std_msgs::Float32>("/sim_real_time_factor", 1);
 
   // Advertise spawn services on the custom queue
   std::string spawn_sdf_model_service_name("spawn_sdf_model");
@@ -1808,6 +1813,50 @@ void GazeboRosApiPlugin::publishSimTime()
   //  publish time to ros
   last_pub_clock_time_ = sim_time;
   pub_clock_.publish(ros_time_);
+}
+
+void GazeboRosApiPlugin::publishRealTimeFactor(ConstWorldStatisticsPtr &_msg)
+{
+  // Note that this is a reimplementation of the Gazebo method found here:
+  // https://bitbucket.org/osrf/gazebo/src/a24b331f8ebfd712a226ba73b7f43d2d4c14fe15/tools/gz.cc?at=gazebo7&fileviewer=file-view-default#gz.cc-854
+  // The goal is to make the real-time factor available in ROS bags, for use as an easy "system performance" metric
+  // with post-run analysis.
+  double percent = 0;
+  common::Time simTime  = msgs::Convert(_msg->sim_time());
+  common::Time realTime = msgs::Convert(_msg->real_time());
+
+  this->simTimes.push_back(msgs::Convert(_msg->sim_time()));
+  if (this->simTimes.size() > 20)
+    this->simTimes.pop_front();
+
+  this->realTimes.push_back(msgs::Convert(_msg->real_time()));
+  if (this->realTimes.size() > 20)
+    this->realTimes.pop_front();
+
+  common::Time simAvg, realAvg;
+  std::list<common::Time>::iterator simIter, realIter;
+  simIter = ++(this->simTimes.begin());
+  realIter = ++(this->realTimes.begin());
+  while (simIter != this->simTimes.end() && realIter != this->realTimes.end())
+  {
+    simAvg += ((*simIter) - this->simTimes.front());
+    realAvg += ((*realIter) - this->realTimes.front());
+    ++simIter;
+    ++realIter;
+  }
+
+  // Prevent divide by zero
+  if (realAvg <= 0)
+    return;
+
+  simAvg = simAvg / realAvg;
+
+  if (simAvg > 0)
+    percent = simAvg.Double();
+  else
+    percent = 0;
+
+  pub_real_time_factor_.publish(static_cast<float>(percent));
 }
 
 void GazeboRosApiPlugin::publishLinkStates()
