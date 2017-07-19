@@ -48,6 +48,53 @@ Changelog for package gazebo_ros_control
 2.5.8 (2016-12-06)
 ------------------
 
+Forthcoming
+-----------
+* 2.5.13
+* Update changelogs
+* Less exciting console output (`#561 <https://github.com/jliviero/gazebo_ros_pkgs/issues/561>`_)
+* Add catkin package(s) to provide the default version of Gazebo - take II (kinetic-devel) (`#571 <https://github.com/jliviero/gazebo_ros_pkgs/issues/571>`_)
+  * Added catkin package gazebo_dev which provides the cmake config of the installed Gazebo version
+  Conflicts:
+  gazebo_plugins/package.xml
+  gazebo_ros/package.xml
+  gazebo_ros_control/package.xml
+  * gazebo_plugins/gazebo_ros: removed dependency SDF from CMakeLists.txt
+  The sdformat library is an indirect dependency of Gazebo and does not need to be linked explicitly.
+  * gazebo_dev: added execution dependency gazebo
+* 2.5.12
+* Changelogs for next version
+* Fixed broken gazebo_ros_control tutorial link (`#566 <https://github.com/jliviero/gazebo_ros_pkgs/issues/566>`_)
+* 2.5.11
+* Changelogs to prepare for next 2.5.11
+* Change build system to set DEPEND on Gazebo/SDFormat (fix catkin warning)
+  Added missing DEPEND clauses to catkin_package to fix gazebo catkin warning. Note that after the change problems could appear related to -lpthreads errors. This is an known issue related to catkin: https://github.com/ros/catkin/issues/856.
+* Make gazebo_ros_control compatible with ros_control with respect to <hardwareInterface> tag (`#550 <https://github.com/jliviero/gazebo_ros_pkgs/issues/550>`_)
+  * ros_control expects "<hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>", i.e. "hardware_interface/" prefix
+  * add deprecation warning
+  * improve warning
+  * fix warning message fix
+* 2.5.10
+* Changelogs for 2.5.10
+* Revert catkin warnings to fix regressions (problems with catkin -lpthreads errors)
+  For reference and reasons, please check:
+  https://discourse.ros.org/t/need-to-sync-new-release-of-rqt-topic-indigo-jade-kinetic/1410/4
+  * Revert "Fix gazebo catkin warning, cleanup CMakeLists (`#537 <https://github.com/jliviero/gazebo_ros_pkgs/issues/537>`_)"
+  This reverts commit 5a0305fcb97864b66bc2e587fc0564435b4f2034.
+  * Revert "Fix gazebo and sdformat catkin warnings"
+  This reverts commit 11f95d25dcd32faccd2401d45c722f7794c7542c.
+* 2.5.9
+* Update changelogs
+* Fix gazebo catkin warning, cleanup CMakeLists (`#537 <https://github.com/jliviero/gazebo_ros_pkgs/issues/537>`_)
+* Namespace console output (`#543 <https://github.com/jliviero/gazebo_ros_pkgs/issues/543>`_)
+  Namespace all console output
+* Print name of joint with wrong interface
+* Removed all trailing whitespace
+* Change boost::shared_ptr to urdf::JointConstSharedPtr
+* 2.5.8
+* Update changelogs for 2.5.8
+* Contributors: Andreas Bihlmaier, Bence Magyar, Dave Coleman, Ian McMahon, Jochen Sprickerhof, Jose Luis Rivero
+
 2.5.7 (2016-06-10)
 ------------------
 * delete CATKIN_IGNORE in gazebo_ros_control (`#456 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/456>`_)

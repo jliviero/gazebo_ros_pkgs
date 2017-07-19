@@ -27,6 +27,43 @@ Changelog for package gazebo_msgs
 2.5.8 (2016-12-06)
 ------------------
 
+Forthcoming
+-----------
+* 2.5.13
+* Update changelogs
+* Add catkin package(s) to provide the default version of Gazebo - take II (kinetic-devel) (`#571 <https://github.com/jliviero/gazebo_ros_pkgs/issues/571>`_)
+  * Added catkin package gazebo_dev which provides the cmake config of the installed Gazebo version
+  Conflicts:
+  gazebo_plugins/package.xml
+  gazebo_ros/package.xml
+  gazebo_ros_control/package.xml
+  * gazebo_plugins/gazebo_ros: removed dependency SDF from CMakeLists.txt
+  The sdformat library is an indirect dependency of Gazebo and does not need to be linked explicitly.
+  * gazebo_dev: added execution dependency gazebo
+* 2.5.12
+* Changelogs for next version
+* 2.5.11
+* Changelogs to prepare for next 2.5.11
+* [gazebo_ros] Changed the spawn model methods to spawn also lights. (`#511 <https://github.com/jliviero/gazebo_ros_pkgs/issues/511>`_)
+  * [gazebo_ros] Changed the spawn model methods to spawn also lights (and renamed accordingly).
+  Created services for deleting lights, and getting and settings lights' properties.
+  * [gazebo_ros] Changed the spawn model methods to spawn also lights.
+  Created services for deleting lights, and getting and settings lights' properties.
+  * [gazebo_ros] Changed the spawn model methods to spawn also lights.
+  Created services for deleting lights, and getting and settings lights' properties.
+  * [gazebo_ros] Changed the spawn model methods to spawn also lights.
+  Created services for deleting lights, and getting and settings lights' properties.
+  * [gazebo_ros] Changed the spawn model methods to spawn also lights.
+  Created services for deleting lights, and getting and settings lights' properties.
+* 2.5.10
+* Changelogs for 2.5.10
+* 2.5.9
+* Update changelogs
+* Removed all trailing whitespace
+* 2.5.8
+* Update changelogs for 2.5.8
+* Contributors: Alessandro Ambrosano, Dave Coleman, Jose Luis Rivero
+
 2.5.7 (2016-06-10)
 ------------------
 
