@@ -76,8 +76,8 @@ Changelog for package gazebo_plugins
 * Added an interface to gazebo's harness plugin
 * Contributors: Enrique Fernandez, Steven Peters, Nate Koenig
 
-Forthcoming
------------
+2.5.14 (2017-07-19)
+-------------------
 * Changelogs
 * Compute twist in BODY frame for p3d plugin
   Instead of the twist just in the world frame.

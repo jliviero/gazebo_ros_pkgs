@@ -23,8 +23,8 @@ Changelog for package gazebo_ros_pkgs
 2.5.8 (2016-12-06)
 ------------------
 
-Forthcoming
------------
+2.5.14 (2017-07-19)
+-------------------
 * Changelogs
 * 2.5.13
 * Update changelogs
