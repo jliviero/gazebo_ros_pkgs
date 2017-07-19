@@ -78,6 +78,114 @@ Changelog for package gazebo_plugins
 
 Forthcoming
 -----------
+* Changelogs
+* Compute twist in BODY frame for p3d plugin
+  Instead of the twist just in the world frame.
+* 2.5.13
+* Update changelogs
+* Fix inverted height in block laser plugin (`#582 <https://github.com/jliviero/gazebo_ros_pkgs/issues/582>`_)
+* Allow disabling distorted camera border crop (and associated tests) (`#572 <https://github.com/jliviero/gazebo_ros_pkgs/issues/572>`_)
+  Allow disabling distorted camera border crop
+* Add an IMU sensor plugin that inherits from SensorPlugin (`#363 <https://github.com/jliviero/gazebo_ros_pkgs/issues/363>`_)
+  * added a IMU sensor plugin that inherits from SensorPlugin
+  * now the plugin works with multiple robots
+  * using GetParentName name instead of GetScopedName
+  * added comments to highlight the differents between GazeboRosImuSensor and GazeboRosIMU
+  * now the message header is properly handled, using bodyName parameter as frame_id
+  * added check on gazebo version
+  * added check for sensor null pointer
+  * changed deprecated functions for gazebo version >= 6
+  * fixed version check
+  * added missing sensor variable for LastUpdateTime() function call
+  * considering '/' included in the robotNamespace
+  * replaced "bodyFrame" with "frameName"
+* Less exciting console output (`#561 <https://github.com/jliviero/gazebo_ros_pkgs/issues/561>`_)
+* Add catkin package(s) to provide the default version of Gazebo - take II (kinetic-devel) (`#571 <https://github.com/jliviero/gazebo_ros_pkgs/issues/571>`_)
+  * Added catkin package gazebo_dev which provides the cmake config of the installed Gazebo version
+  Conflicts:
+  gazebo_plugins/package.xml
+  gazebo_ros/package.xml
+  gazebo_ros_control/package.xml
+  * gazebo_plugins/gazebo_ros: removed dependency SDF from CMakeLists.txt
+  The sdformat library is an indirect dependency of Gazebo and does not need to be linked explicitly.
+  * gazebo_dev: added execution dependency gazebo
+* 2.5.12
+* Changelogs for next version
+* Revert catkin warning fix (`#567 <https://github.com/jliviero/gazebo_ros_pkgs/issues/567>`_)
+  Many regressions in third party software (see https://github.com/yujinrobot/kobuki_desktop/issues/50)
+* 2.5.11
+* Changelogs to prepare for next 2.5.11
+* Change build system to set DEPEND on Gazebo/SDFormat (fix catkin warning)
+  Added missing DEPEND clauses to catkin_package to fix gazebo catkin warning. Note that after the change problems could appear related to -lpthreads errors. This is an known issue related to catkin: https://github.com/ros/catkin/issues/856.
+* Fix: add gazebo_ros_range to catkin package libraries (`#558 <https://github.com/jliviero/gazebo_ros_pkgs/issues/558>`_)
+* 2.5.10
+* Changelogs for 2.5.10
+* Revert catkin warnings to fix regressions (problems with catkin -lpthreads errors)
+  For reference and reasons, please check:
+  https://discourse.ros.org/t/need-to-sync-new-release-of-rqt-topic-indigo-jade-kinetic/1410/4
+  * Revert "Fix gazebo catkin warning, cleanup CMakeLists (`#537 <https://github.com/jliviero/gazebo_ros_pkgs/issues/537>`_)"
+  This reverts commit 5a0305fcb97864b66bc2e587fc0564435b4f2034.
+  * Revert "Fix gazebo and sdformat catkin warnings"
+  This reverts commit 11f95d25dcd32faccd2401d45c722f7794c7542c.
+* Fix destructor of GazeboRosVideo (`#547 <https://github.com/jliviero/gazebo_ros_pkgs/issues/547>`_)
+* Less exciting console output (`#549 <https://github.com/jliviero/gazebo_ros_pkgs/issues/549>`_)
+* Fix SDF namespacing for Video Plugin (`#546 <https://github.com/jliviero/gazebo_ros_pkgs/issues/546>`_)
+* 2.5.9
+* Update changelogs
+* replaced "bodyFrame" with "frameName"
+* considering '/' included in the robotNamespace
+* Fix gazebo catkin warning, cleanup CMakeLists (`#537 <https://github.com/jliviero/gazebo_ros_pkgs/issues/537>`_)
+* Fix timestamp issues for rendering sensors (kinetic-devel)
+  This PR builds on top of pull request `#410 <https://github.com/jliviero/gazebo_ros_pkgs/issues/410>`_ and applies the timestamp fix
+  to kinect_openni and prosilica sensors
+* Namespace console output (`#543 <https://github.com/jliviero/gazebo_ros_pkgs/issues/543>`_)
+  Namespace all console output
+* Fix problem introduced with the merge
+* Fix merge with kinetic branch
+* `#408 <https://github.com/jliviero/gazebo_ros_pkgs/issues/408>`_ Increasing max time because some systems are taking 0.6 seconds to receive the messages (still well less than 2.0 seconds). Also all the tests can be run with run_tests_gazebo_plugins_rostest but only with the -j1 flag `#409 <https://github.com/jliviero/gazebo_ros_pkgs/issues/409>`_
+* Fix merge with kinetic branch
+* Fix merge with kinetic branch
+* `#408 <https://github.com/jliviero/gazebo_ros_pkgs/issues/408>`_ also test points publication
+* `#408 <https://github.com/jliviero/gazebo_ros_pkgs/issues/408>`_ Created test for depth camera, which fails, so next make it pass
+* Disabling this test because of `#409 <https://github.com/jliviero/gazebo_ros_pkgs/issues/409>`_
+* Adding depth camera world to use in test to make depth camera have right timestamp `#408 <https://github.com/jliviero/gazebo_ros_pkgs/issues/408>`_- appears to be working (though only looking at horizon) but getting these sdf errors:
+  Error [SDF.cc:789] Missing element description for [pointCloudTopicName]
+  Error [SDF.cc:789] Missing element description for [depthImageCameraInfoTopicName]
+  Error [SDF.cc:789] Missing element description for [pointCloudCutoff]
+* `#408 <https://github.com/jliviero/gazebo_ros_pkgs/issues/408>`_ Make the multi camera timestamps current rather than outdated, also reuse the same update code
+* Fix merge with kinetic branch
+* `#408 <https://github.com/jliviero/gazebo_ros_pkgs/issues/408>`_ Making a test for multicamra that shows the timestamps are currently outdated, will fix them similar to how the regular camera was fixed.
+* Fix for issue `#408 <https://github.com/jliviero/gazebo_ros_pkgs/issues/408>`_. The last measurement time is the time that gazebo generated the sensor data, so ought to be used. updateRate doesn't seem that useful.
+  The other cameras need similar fixes to have the proper timestamps.
+* Fix merge with kinetic branch
+* Removed all trailing whitespace
+* [gazebo_plugins] bugfix: duplicated tf prefix resolution
+  (cherry picked from commit d760220bfb28e639f28fa933edf315699127dcd0)
+* fill in child_frame_id of odom topic
+* Use uppercase to workaround the catkin warning
+* Fix gazebo and sdformat catkin warnings
+* 2.5.8
+* Update changelogs for 2.5.8
+* Fix distortion coefficients order
+  It should be D = {k1, k2, p1, p2, k3}, according to:
+  - sensor_msgs/CameraInfo:
+  http://docs.ros.org/api/sensor_msgs/html/msg/CameraInfo.html
+  - OpenCV:
+  http://docs.opencv.org/2.4/modules/calib3d/doc/camera_calibration_and_3d_reconstruction.html
+* added missing sensor variable for LastUpdateTime() function call
+* fixed version check
+* changed deprecated functions for gazebo version >= 6
+* added check for sensor null pointer
+* added check on gazebo version
+* Use NOT VERSION_LESS to simplify cmake logic
+* Added an interface to gazebo's harness plugin
+* now the message header is properly handled, using bodyName parameter as frame_id
+* added comments to highlight the differents between GazeboRosImuSensor and GazeboRosIMU
+* using GetParentName name instead of GetScopedName
+* now the plugin works with multiple robots
+* added a IMU sensor plugin that inherits from SensorPlugin
+* Contributors: Adam Allevato, Alessandro, Alessandro Settimi, Christoph Rist, Dave Coleman, Enrique Fernandez, Jordan Liviero, Jose Luis Rivero, Kei Okada, Lucas Walter, Shohei Fujii, Steven Peters, Yuki Furuta, nate koenig
+
 * Compute twist in BODY frame for p3d plugin
   Instead of the twist just in the world frame.
 * 2.5.13
